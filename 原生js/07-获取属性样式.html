@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      border: 1px solid #000000;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script>
+    window.onload = function () {
+      var box = document.getElementById('box')
+      move(box)
+    }
+    function move (obj) {
+      setInterval(function () {
+        obj.style.width = parseInt(getStyle(obj, 'width')) - 1 + 'px'
+      }, 30)
+    }
+
+    // obj: 当前元素对象    attr:  当前元素对象的属性
+    function getStyle (obj, attr) {
+      if (obj.currentStyle) {
+        // 兼容ie浏览器
+        return obj.currentStyle[attr]
+      } else {
+        // 兼容主流浏览器
+        return getComputedStyle(obj,null)[attr]
+      }
+    }
+  </script>
+</body>
+</html>

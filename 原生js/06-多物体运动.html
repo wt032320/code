@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      width: 200px;
+      height: 50px;
+      background-color: pink;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+  <script>
+    window.onload = function () {
+      var allboxs = document.getElementsByTagName('div')
+      for (var i = 0; i < allboxs.length; i++) {
+        allboxs[i].onmouseover = function () {
+          startAnimation(this, 400)
+        }
+        allboxs[i].onmouseout = function () {
+          startAnimation(this, 200)
+        }
+      }
+    }
+    var speed = 0
+    startAnimation = function (obj, endTarget) {
+      clearInterval(obj.timer)
+      obj.timer = setInterval(function () {
+        // 1.求速度
+        speed = (endTarget - obj.offsetWidth) / 5;
+        speed = endTarget > obj.offsetWidth ? Math.ceil(speed) : Math.floor(speed)
+
+        // 2.临界处理
+        if (endTarget === obj.offsetWidth) {
+          clearInterval(timer)
+          return
+        }
+
+        // 3.运动
+        obj.style.width = obj.offsetWidth + speed + 'px'
+      }, 30)
+    }
+  </script>
+</body>
+</html>

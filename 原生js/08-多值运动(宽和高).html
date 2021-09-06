@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      width: 200px;
+      height: 50px;
+      background-color: pink;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+  <script>
+    window.onload = function () {
+      var allboxs = document.getElementsByTagName('div')
+      allboxs[0].onmouseover = function () {
+        startAnimation(this, 'width', 400)
+      }
+      allboxs[0].onmouseout = function () {
+        startAnimation(this, 'width', 200)
+      }
+      allboxs[1].onmouseover = function () {
+        startAnimation(this, 'height', 200)
+      }
+      allboxs[1].onmouseout = function () {
+        startAnimation(this, 'height', 50)
+      }
+    }
+    var speed = 0
+    startAnimation = function (obj, attr, endTarget) {
+      clearInterval(obj.timer)
+      obj.timer = setInterval(function () {
+        // 获取样式属性
+        var cur = parseInt(getStyle(obj, attr))
+
+        // 1.求速度
+        speed = (endTarget - cur) / 20;
+        speed = endTarget > cur ? Math.ceil(speed) : Math.floor(speed)
+
+        // 2.临界处理
+        if (endTarget === cur) {
+          clearInterval(timer)
+          return
+        }
+
+        // 3.运动
+        obj.style[attr] = cur + speed + 'px'
+      }, 30)
+    }
+    function getStyle (obj, attr) {
+      if (obj.currentStyle) {
+        // 兼容ie浏览器
+        return obj.currentStyle[attr]
+      } else {
+        // 兼容主流浏览器
+        return getComputedStyle(obj,null)[attr]
+      }
+    }
+  </script>
+</body>
+</html>

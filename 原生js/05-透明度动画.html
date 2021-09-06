@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      /* 透明度：opacity */
+      opacity: 1; 
+      /* 支持ie8以下浏览器 */
+      filter: alpha(opacity = 30);
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script>
+    window.onload = function () {
+      // 1.获取需要的元素
+      var box = document.getElementById('box')
+      // 2.监听事件
+      box.onmouseover = function () {
+        opacityAnmiation(this, 100)
+      }
+      box.onmouseout = function () {
+        opacityAnmiation(this, 30)
+      }
+      var timer = null
+      var alpha = 30, speed = 0
+      function opacityAnmiation (obj, endalpha) {
+        clearInterval(timer)
+        timer = setInterval(function () {
+          // 求透明度变化的速度
+          speed = endalpha > alpha ? 5 : -5
+
+          // 边界的处理
+          if (alpha === endalpha) {
+            clearInterval(timer)
+            return
+          }
+          // 改变当前的alpha值
+          alpha += speed
+
+          obj.style.opacity = alpha / 100
+          obj.style.filter = `alpha(opacity: ${alpha})`
+        }, 30)
+      }
+    }
+  </script>
+</body>
+</html>

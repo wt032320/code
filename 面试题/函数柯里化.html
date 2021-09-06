@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  函数柯里化：currying 
+  柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。在数学和计算机科学中的柯里化函数，一次只能传递一个参数；而我们Javascript实际应用中的柯里化函数，可以传递一个或多个参数
+  当接收的参数数量与原函数的形参数量相同时，执行原函数； 当接收的参数数量小于原函数的形参数量时，返回一个函数用于接收剩余的参数，直至接收的参数数量与形参数量一致，执行原函数。
+  <script>
+    let monthlyCost = 0
+
+    // function cost(money) {
+    //   monthlyCost += money
+    // }
+    
+    const cost = (function () {
+      let args = []
+      return function () {
+        if (arguments.length === 0) {
+          let money = 0
+
+          for (let i = 0; i < args.length; i++) {
+            money += args[i]
+          }
+          return money
+        } else {
+          [].push.apply(args, arguments)
+        }
+      }
+    })()
+
+    const currying = function (fn) {
+      let args = []
+      return function () {
+        if (arguments.length === 0) {
+          return fn().apply(this, args)
+        } else {
+          [].push.apply(args, arguments)
+        }
+      }
+    }
+
+    function cost1 () {
+      let money = 0
+      for (let i = 0; i < arguments.length; i++) {
+        money += arguments[i]
+      }
+      return money
+    }
+
+
+    cost(100)
+    cost(200)
+    cost(300)
+    console.log(cost())
+
+  </script>
+</body>
+</html>

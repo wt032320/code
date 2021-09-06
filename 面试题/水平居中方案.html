@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .text {
+      color: cadetblue; 
+      text-align: center;
+    }
+
+    /* 设置子元素为`inline-block`，触发父元素为`IFC`
+- 父元素：`text-align:center;`
+- 子元素：`display:inline-block;`*/
+    .father {
+      text-align: center;
+      background-color: cadetblue; 
+    }
+    .son {
+      display: inline-block;
+      background-color: antiquewhite;
+    }
+
+    .father1 {
+      width: 100%;
+      background-color: aquamarine;
+    }
+    .son1 {
+      width: 200px;
+      height: 50px;
+      margin: 0 auto;
+      background-color: aqua;
+    }
+
+    .father2 {
+      width: fit-content; /*包裹性收缩到合适*/
+      margin: 0 auto;
+      background-color: aquamarine;
+    }
+    .son2 {
+      width: 200px;
+      height: 50px;
+      float: left;
+      margin: 0 20px;
+      background-color: blue;
+    }
+
+    .father3 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: blueviolet;
+    }
+    .son3 {
+      width: 200px;
+      height: 50px;
+      align-self: center;
+      background-color: cadetblue;
+    }
+
+    .father4 {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background-color: cornsilk;
+    }
+
+    .son4 {
+      width: 200px;
+      height: 50px;
+      background-color: coral;
+    }
+
+    .father5 {
+      width: 100%;
+      height: 50px;
+      background-color: chartreuse;
+    }
+
+    .son5 {
+      width: 200px;
+      height: 50px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0); /*子元素自身宽度的负百分之50%，translate(x轴，y轴)，平移*/
+      background-color: chocolate;
+    }
+
+    .father6 {
+      width: 100%;
+      height: 50px;
+      background-color: cyan;
+    }
+    .son6 {
+      width: 200px;
+      height: 50px;
+      position: absolute;
+      left: 50%;
+      margin-left: -100px;
+      background-color: darkkhaki;
+    }
+  </style>
+</head>
+<body>
+  <h1>水平居中</h1>
+
+  <h3>1.单行文本</h3>
+  <div class="text">这是一行文本</div>
+
+  <h3>2.子元素是行内元素</h3>
+  <div class="father">
+    <span class="son">123456</span>
+  </div>
+
+  <h3>3.子元素是块级元素</h3>
+  <div class="father1">
+    <div class="son1"></div>
+  </div>
+
+  <!-- <h3>4.fit-content(若子元素包含 **float:left** 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin)</h3> 
+  <div class="father2">
+    <div class="son2"></div>
+  </div> -->
+
+  <h3>5.flex</h3>
+  <h5>flex方法一</h5>
+  <div class="father3">
+    <div class="son3"></div>
+  </div>
+
+  <h5>flex方法二</h5>
+  <div class="father4">
+    <div class="son4"></div>
+  </div>
+
+  <h3>6.transform</h3>
+  <div class="father5">
+    <div class="son5"></div>
+  </div>
+
+  <h4>绝对定位+负margin-left</h4>
+  <div class="father6">
+    <div class="son6"></div>
+  </div>
+</body>
+</html>

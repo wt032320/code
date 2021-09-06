@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .outer {
+      width: 100%;
+      min-width: 200px;
+    }
+    .side {
+      width: 100px;
+      height: 100px;
+      background-color: antiquewhite
+    }
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+    .mid {
+      float: left;
+      width: calc(100% - 200px);
+      height: 100px;
+      background-color: aqua;
+    }
+
+    .outer1 {
+      position: relative;
+    }
+    .inner {
+      position: absolute;
+      top: 0;
+      height: 100px;
+      background-color: aqua;
+    }
+
+    .left1 {
+      left: 0;
+      width: 100px;
+    }
+    .right1 {
+      right: 0;
+      width: 100px;
+    }
+    .mid1 {
+      /* left: 100px;
+      width: calc(100% - 100px); */
+      left: 100px;
+      right: 100px;
+      background-color: azure;
+    }
+
+    .zz {
+      margin-top: 130px;
+    }
+    .outer2 {
+      display: flex;
+    }
+    .inner1 {
+      width: 100px;
+      height: 100px;
+      background-color: burlywood;
+    }
+    .mid2 {
+      flex: auto;
+      background-color: cornflowerblue;
+    }
+
+    .outer3 {
+      display: table;
+    }
+    .inner2 {
+      width: 100px;
+      height: 100px;
+      background-color: darkgoldenrod;
+    }
+    .mid3 {
+      display: table-cell;
+      width: 100%;
+      background-color: darkorchid;
+    }
+
+    .outer4 {
+      display: grid;
+      width: 100%;
+      grid-template-rows: 100px;
+      grid-template-columns: 100px auto 100px;
+    }
+    .inner3 {
+      background-color: darksalmon;
+    }
+    .mid4 {
+      background-color: darkseagreen;
+    }
+  </style>
+</head>
+<body>
+  <!-- 三栏布局: 五种方式: float,table,position,flex,grid -->
+  <h3>1.float</h3>
+  <div class="outer">
+    <div class="side left"></div>
+    <div class="mid"></div>
+    <div class="side right"></div>
+  </div>
+
+  <h3>2.position</h3>
+  <div class="outer1">
+    <div class="inner left1"></div>
+    <div class="inner mid1"></div>
+    <div class="inner right1"></div>
+  </div>
+
+  <div class="zz">
+    <h3>3.flex</h3>
+    <div class="outer2">
+      <div class="inner1 left2"></div>
+      <div class="inner1 mid2"></div>
+      <div class="inner1 right2"></div>
+    </div>
+  </div>
+
+  <h3>4.table</h3>
+  <div class="outer3">
+    <div class="inner2 left3"></div>
+    <div class="inner2 mid3"></div>
+    <div class="inner2 right3"></div>
+  </div>
+
+  <h3>5.grid</h3>
+  <div class="outer4">
+    <div class="inner3 left4"></div>
+    <div class="inner3 mid4"></div>
+    <div class="inner3 right4"></div>
+  </div>
+</body>
+</html>

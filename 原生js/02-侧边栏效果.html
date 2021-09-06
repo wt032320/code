@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      position: relative;
+      left: -200px;
+    }
+    #box span {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      width: 40px;
+      height: 60px;
+      margin-top: -30px;
+      color: #ffffff;
+      background-color: blue;
+      line-height: 60px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <span>
+      拉开
+    </span>
+  </div>
+    <script>
+      window.onload = () => {
+        var box = document.getElementById('box')
+        var timer = null
+        box.onmouseover = () => {
+          // 先关闭定时器
+          clearInterval(timer)
+          timer = setInterval(() => {
+            if (box.offsetLeft === 0) {
+              clearInterval(timer)
+              return
+            }
+            box.style.left = box.offsetLeft + 5 + 'px'
+          }, 30)
+        }
+
+        box.onmouseout = () => {
+          // 先关闭定时器
+          clearInterval(timer)
+          timer = setInterval(() => {
+            if (box.offsetLeft === -200) {
+              clearInterval(timer)
+              return
+            }
+            box.style.left = box.offsetLeft - 5 + 'px'
+          }, 30)
+        }
+        // // onmouseover 鼠标悬浮时
+        // box.onmouseover = () => {
+        //   this.style.left = 0 + 'px'
+        // }
+        // box.onmouseout = () => {
+        //   this.style.left = -200 + 'px'
+        // }
+      }
+    </script>
+</body>
+</html>

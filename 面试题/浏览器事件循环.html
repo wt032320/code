@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Promise.resolve().then(() => {
+    //   console.log('promise1')
+    // })
+
+    // async function async1 () {
+    //   console.log('async1 start')
+    //   await async2()
+    //   console.log('async1 end')
+    // }
+    // async function async2 () {
+    //   console.log('async2')
+    // }
+
+    // console.log('script start')
+
+    // setTimeout(function() {
+    //   console.log('setTimeout')
+    // }, 0)
+    
+    // async1()
+
+    // new Promise(function(reslove) {
+    //   console.log('promise2')
+    //   reslove()
+    // }).then(function() {
+    //   console.log('promise3')
+    // })
+
+    // console.log('script end')
+
+    let i = 0
+    
+    const FnA = () => {
+      console.log(1)
+      return new Promise((reslove) => {
+        reslove(i++)
+      })
+    }
+    const a = FnA()
+
+    setTimeout(() => {
+      console.log(2)
+      a.then((result) => console.log(result))
+    }, 0)
+
+    console.log(3)
+    a.then((result) => console.log(result))
+  </script>
+</body>
+</html>

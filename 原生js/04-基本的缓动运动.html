@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      position: relative;
+      left: -200px;
+    }
+    #box span {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      width: 40px;
+      height: 60px;
+      margin-top: -30px;
+      color: #ffffff;
+      background-color: blue;
+      line-height: 60px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <span>拉开</span>
+  </div>
+  <script>
+    window.onload = function () {
+      // 缓动动画公式: 加速度 = (结束值 - 起始值) / 缓动系数
+      var box = document.getElementById('box')
+      var timer = null, end = 0, end2 = -200
+      box.onmouseover = function () {
+        clearInterval(timer)
+        timer = setInterval(function () {
+          speed = Math.ceil((end - box.offsetLeft) / 20)
+          if (box.offsetLeft === end) {
+            clearInterval(timer)
+            return
+          }
+          box.style.left = box.offsetLeft + speed + 'px'
+        }, 30)
+      }
+      box.onmouseout = function () {
+        clearInterval(timer)
+        timer = setInterval(function () {
+          speed = Math.floor((end2 - box.offsetLeft) / 20)
+          if (box.offsetLeft === end2) {
+            clearInterval(timer)
+            return
+          }
+          box.style.left = box.offsetLeft + speed + 'px'
+        }, 30)
+      }
+    }
+  </script>
+</body>
+</html>

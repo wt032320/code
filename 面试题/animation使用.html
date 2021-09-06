@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>animation</title>
+  <style>
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 15px solid black;
+      animation: changebox 1s ease-in-out 1s infinite alternate running forwards;
+      /* /动画changebox在1s后以1s/次的速度沿着ease-in-out的速度循环运行，永不停息，动画结束后动画停留在结束状态 */
+    }
+    .box:hover {
+      /* 动画停止 */
+      animation-play-state: paused; 
+    }
+    @keyframes changebox {
+      from {
+        left: 0;
+        top: 0;
+      }
+      to {
+        left: 100%;
+        top: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+</body>
+</html>

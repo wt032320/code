@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    button {
+      width: 80px;
+      height: 40px;
+    }
+    #box {
+      position: absolute;
+      top: 50px;
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <!-- 如何让物体运动起来 -->
+  <button id="btn">动画</button>
+  <div id="box"></div>
+  <script>
+    // 简单的动画存在的问题： 1.处理边界  2.定时器的管理
+
+    // 1.获取事件源
+    var btn = document.getElementById('btn')
+    var box = document.getElementById('box')
+    var timer = null
+    // 2.给按钮绑定事件
+    btn.onclick = () => {
+      // 先关闭定时器 再开启定时器 防止定时器累加 导致物体加快
+      clearInterval(timer)
+      // 让物体运动起来(settimeout)
+      timer = setInterval(() => {
+        if (box.offsetLeft === 500) {
+          clearInterval(timer)
+          return
+        }
+        box.style.left = box.offsetLeft + 10 + 'px'
+      },30)
+    }
+  </script>
+</body>
+</html>

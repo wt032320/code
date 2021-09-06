@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      position: relative;
+      left: -200px;
+    }
+    #box span {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      width: 40px;
+      height: 60px;
+      margin-top: -30px;
+      color: #ffffff;
+      background-color: blue;
+      line-height: 60px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <span>拉开</span>
+  </div>
+  <script>
+    window.onload = function () {
+      var box = document.getElementById('box')
+      box.onmouseover = function () {
+        startAnimation(this, 0)
+      }
+      box.onmouseout = function () {
+        startAnimation(this, -200)
+      }
+    }
+    var timer = null
+    var speed = 0
+    function startAnimation(obj, end) {
+      // 先关闭定时器
+      clearInterval(timer)
+      speed = end > obj.offsetLeft ? 5 : -5
+      timer = setInterval(function () {
+        if (obj.offsetLeft === end) {
+          clearInterval(timer)
+          return
+        }
+        obj.style.left = obj.offsetLeft + speed + 'px'
+      }, 30)
+    }
+    
+    // 它们的大小取决于元素的宽高、padding以及边框border，有无滚动条都没有影响，下面是他们的计算方式。  
+
+    // offsetWidth=width(样式中设置的)+左右padding+左右border
+
+    // offsetHeight=height(样式中设置的)+上下padding+上下border
+  </script>
+</body>
+</html>

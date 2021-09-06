@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transition</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background: rgb(86, 170, 209);
+      transition-property: transform, border-radius, opacity;
+      transition-duration: 1s, 2s, 3s;
+      transition-timing-function: ease-in, ease-out, ease-in-out;
+    }
+    #box:hover {
+      border-radius: 100px;
+      opacity: .5;
+      transform: rotate(-180deg) scale(.5, .5);
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+</body>
+</html>

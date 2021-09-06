@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .body {
+      min-width: 600px;
+    }
+    .header,
+    .footer {
+        background-color: gray;
+    }
+    .footer {
+        clear: both;
+    }
+    /* 触发BFC 防止浮动塌陷，并使三栏相对定位 */
+    .container {
+      overflow: hidden;
+      /* 为父级设置`padding:0 200px`;为侧栏留出距离 */
+      padding: 0 200px;
+    }
+    .container>div {
+      position: relative;
+      float: left;
+      height: 100px;
+    }
+    .center {
+      width: 100%;
+      background-color: red;
+    }
+    .left {
+      left: -200px;
+      width: 200px;
+      /* left设置`margin-left:-100%;`让`left`移上去 此时`right`来到`left`原来的位置*/
+      margin-left: -100%;
+      background-color: cadetblue;
+    }
+    .right {
+      right: -200px;
+      width: 200px;
+      /* 给`right`设置`margin-left:-200px;`让`right`移上去 */
+      margin-left: -200px;
+      background-color: cadetblue;
+    }
+
+    .header1,
+    .footer1 {
+      background-color: gray;
+    }
+    .footer1 {
+      clear: both; /*清除浮动 因为双飞翼布局的浮动没有包含在父级的`BFC`内，所以需要在`footer1`部分进行浮动的清除*/
+    }
+    .container1, 
+    .left1,
+    .right1 {
+      float: left;
+      height: 200px;
+    }
+    /* 给`container1`设置`width:100%`，把`left1`和`right1`挤到下面，给`left1`和`right1`设置宽度 */
+    .container1 {
+      width: 100%;
+    }
+    /* }给`center`设置`margin:0 200px`，留下侧栏宽度，这里的`center`是没有自己的高度的，它的高度由内容撑起 */
+    .center1 {
+      margin: 0 200px;
+      background-color: red;
+    }
+    .left1 {
+      width: 200px;
+      margin-left: -100%;
+      background-color: cadetblue;
+    }
+    .right1 {
+      width: 200px;
+      margin-left: -200px;
+      background-color: cadetblue;
+    }
+  </style>
+</head>
+<body>
+  <h3>圣杯布局</h3>
+  <h5>缺点：拖到很小的时候布局会乱，因为`left`和`right`都是先移进`center`，接着使用`position: relative`相对自身进行偏移,这就意味着`center`内部还存在着`left`和`right`的宽度。因此要给body设置最小宽度`200+200+200=600px`。因此就有了双飞翼布局来解决这个问题</h5>
+  <div class="header">this is header</div>
+  <div class="container">
+    <!-- 优先渲染 -->
+    <div class="center">center</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+  </div>
+  <div class="footer">this is footer</div>
+
+  <h3>双飞翼布局</h3>
+  <h5>双飞翼布局是指布局从上到下分为`header`、`container`、`left`、`right`、`footer`，然后`container`内部有的`center`、`left`、`right`部分定为三栏布局。</h5>
+  <div class="header1">this is header</div>
+  <div class="container1">
+    <div class="center1">center</div>
+  </div>
+  <div class="left1">left</div>
+  <div class="right1">right</div>
+  <div class="footer1">this is footer</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+#div1,#div2 {
+    width:198px; 
+    height:66px;
+    padding:10px;
+    border:1px solid #aaaaaa;
+}
+#div1 div,#div2 div{
+  float: left;
+}
+</style>
+<script type="text/javascript">
+
+
+function drag(ev)
+{
+    console.log('start'+ev);
+    ev.dataTransfer.setData("Text",ev.target.id);
+}
+function draging(ev){
+    console.log('元素正在被拖动');
+}
+function draged(ev){
+  ev.preventDefault();
+  console.log('用户完成元素拖动'+ev);
+}
+function enter(ev){
+  console.log('进入矩形'+ev.target.id);
+  ev.preventDefault();
+}
+function over(ev)
+{
+  console.log('在矩形'+ev.target.id+'的范围内被拖动');
+  ev.preventDefault();
+}
+function leave(ev){
+  console.log('离开容器'+ev.target.id+'范围')
+}
+function drop(ev)
+{
+    console.log('在目标容器'+ev.target.id+'中安置');
+    // ev.preventDefault();
+    var data=ev.dataTransfer.getData("Text");
+    //如果想把被拖动元素的放置到目标对象中，需要加这个
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</head>
+<body>
+
+<p>请把方块拖放到矩形中：</p>
+
+<div id="div1" 
+    ondragenter="enter(event)"
+    ondragover="over(event)"
+    ondragleave="leave(event)"
+    ondrop="drop(event)"
+></div>
+<div id="div2"
+    ondragenter="enter(event)"
+    ondragover="over(event)"
+    ondragleave="leave(event)"
+    ondrop="drop(event)"
+></div>
+
+<div id="drag1" style="width:50px;height:50px;background-color:red" draggable="true" ondragstart="drag(event)" ondragend="draged(event)" ondrag="draging(event)"></div>
+<div id="drag2" style="width:50px;height:50px;background-color:green" draggable="true" ondragstart="drag(event)" ondragend="draged(event)"
+ondrag="draging(event)"></div>
+
+</body>
+
+</html>

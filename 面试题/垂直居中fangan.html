@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .father {
+      width: 100%;
+      height: 100px;
+      background-color: chocolate;
+    }
+    .son {
+      width: 200px;
+      line-height: 100px;
+      color: cyan;
+      background-color: cornsilk;
+    }
+
+    .father1 {
+      width: 200px;
+      height: 200px;
+      border: 1px solid red;
+    }
+    .son1 {
+      width: 50px;
+      height: 50px;
+      background-color: aliceblue;
+    }
+    .father1::after,
+    .son1 {
+      display: inline-block;
+      vertical-align: middle; /*用来指定行内元素（`inline`）或表格单元格（`table-cell`）元素的垂直对齐方式。默认值为`baseline`*/
+    }
+    .father1::after {
+      content: '';
+      height: 100%; /*利用伪元素撑开**行框**的高度让内容块处于容器中央。*/
+    }
+
+    .father2 {
+      width: 200px;
+      height: 200px;
+      display: table-cell; /*作为一个表格单元格显示*/
+      vertical-align: middle; /*指定行内元素或者表格单元格元素的垂直对齐方式*/
+      background-color: cornflowerblue;
+    }
+    .son2 {
+      height: 10px;
+      background-color: antiquewhite;
+    }
+
+    .father3 {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      background-color: cornflowerblue;
+    }
+    .son3 {
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+    }
+
+    .father4 {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background-color: cornflowerblue;
+    }
+    .son4 {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      transform: translate(0, -50%);
+      background-color: blue;
+    }
+
+    .father5 {
+      width: 200px;
+      height: 300px;
+      border: 2px solid #ccc;
+    }
+    .son5 {
+      width: 100px;
+      height: 100px;
+      margin-top: 100px;
+      background-color: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <h1>垂直居中</h1>
+
+  <h3>1.单行文本</h3>
+  <div class="father">
+    <div class="son">这是一行文本</div>
+  </div>
+
+  <h3>2.子元素是行内元素</h3>
+  <div class="father1">
+    <span class="son1"></span>
+  </div>
+
+  <h3>3.子元素是块级元素，高度未定</h3>
+  <div class="father2">
+    <div class="son2"></div>
+  </div>
+
+  <h3>4.flex</h3>
+  <div class="father3">
+    <div class="son3"></div>
+  </div>
+
+  <h3>5.transform</h3>
+  <div class="father4">
+    <div class="son4"></div>
+  </div>
+
+  <h3>6.盒模型(子元素是块级元素且高度已经设定，通过`margin-top`或`margin-bottom`实现。计算（父元素高度-子元素高度）/ 2)</h3>
+  <div class="father5">
+    <div class="son5"></div>
+  </div>
+</body>
+</html>

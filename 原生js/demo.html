@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    :root {
+      --backgroud-color: #f5f5f5;
+      --border-color: #7591AD;
+      --text-color: #34495e;
+      --color1: #Ec3E27;
+      --color2: #fd79a8;
+      --color3: #0984e3;
+      --color4: #00b894;
+      --color5: #fdcb6e;
+      --color6: #e056fd;
+      --color7: #F97F51;
+      --color8: #BDC581;
+    }
+
+    *,
+    ::after,
+    ::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-size: 14px;
+      background-color: var(--background-color);
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* 该属性通过定义flex容器的主轴方向来决定flex子项在flex容器中将如何排列 */
+      /* column: 主轴与块轴方向作为默认的书写方式，即纵向从上往下排列(顶对齐) */
+      /* row:  主轴与行内轴方向作为默认的书写方式，即横向从左到右排列(左对齐)*/
+      /* column-reverse: 对齐方式与column相反 */
+      /* row-reverse: 对齐方式与row相反 */
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      border: 2px solid #333333;
+      border-radius: 30px;
+      /* 定义了鼠标指针放在一个元素边界范围内时的光标形状 pointer 一只手 */
+      cursor: pointer;
+    }
+    /* ::before和::after下特有的content，用于在css渲染中向元素逻辑上的头部或尾部添加内容 */
+    #switch::before,
+    #switch::after {
+      position: absolute;
+      line-height: 26px;
+      /* text-transform 转换不同的文本 */
+      /* none 带有小写字母和大写字母的标准的文本(默认属性) */
+      /* capitalize 首字母大写 */
+      /* uppercase 字母大写 */
+      /* lowercase 字母小写 */
+      /* inherit 从父元素继承 */
+      text-transform: uppercase;
+      padding: 0 20px;
+      font-weight: 800;
+      /* 取消前后状态名称的鼠标效果以及点击事件响应 */
+      cursor: initial;
+      pointer-events: none;
+    }
+
+    #switch::before {
+      content: 'fast';
+      right: 100%;
+      color: var(--color8);
+    }
+
+    #switch::after {
+      content: 'slow';
+      left: 100%;
+      color: var(--color3);
+    }
+
+    /* 默认情况 */
+    #switch .circle {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333333;
+      border-radius: 50%;
+      box-shadow: inset 4px -2px 0 0 var(--color8);
+      transition: all .3s cubic-bezier(.86, 1.51, .74, 1);
+    }
+
+    /* 点击选中情况 */
+    #switch.switched .circle {
+      /* calc 计算属性 */
+      left: calc(100% - 20px - 3px);
+      box-shadow: inset 4px -2px 0 0 var(--color3);
+    }
+
+    /* 主画布外框 */
+    .main {
+      position: relative;
+      width: 400px;
+      height: 300px;
+      border: 2px solid #333333;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    /* 太阳 */
+    .sun {
+      position: absolute;
+      left: 270px;
+      top: 50px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333333;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* animation: 用于设置动画属性 */
+      animation: sun_rotate 10s linear infinite;
+    }
+
+    @keyframes sun_rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
+
+    .sun span {
+      position: absolute;
+      display: block;
+      height: 2px;
+      width: 16px;
+      background-color: #333333;
+      /* 在css3中 transform 属性主要包括以下值: */
+      /* rotate: 旋转 */
+      /* skew: 扭曲 */
+      /* scale: 缩放 */
+      /* translate: 移动 */
+      /* matrix: 矩阵变形 */
+      transform: rotate(calc(var(--i) * 45deg)) translateX(-20px);
+      box-shadow: 4px 4px 0 0 var(--color5);
+      animation: sun_ray 1s linear infinite;
+      /* 定义动画什么时候开始 */
+      animation-delay: calc(var(--i) * -0.5s);
+    }
+    
+    /* 定义动画规则,关键帧 */
+    /* 值                 说明 */
+    /* animationname      必需的，定义animation的名称 */
+    /* keyfarmes-selector 必需的，动画持续时间百分比 */
+    /* css-styles         必需的，一个或多个合法的css样式属性 */
+    @keyframes sun_ray {
+      0% {
+        transform: rotate(calc(var(--i) * 45deg)) translateX(-20px) scaleX(1);
+      }
+      50% {
+        transform: rotate(calc(var(--i) * 45deg)) translateX(-20px) scaleX(0.6);
+      }
+      100% {
+        transform: rotate(calc(var(--i) * 45deg)) translateX(-20px) scaleX(1);
+      }
+    }
+
+    /* 群山 */
+
+    .mountain {
+      position: absolute;
+      border: 2px solid #333333;
+      transform: rotate(45deg);
+    }
+
+    .mountain.a {
+      width: 14px;
+      height: 14px;
+      left: 80px;
+      bottom: 35px;
+    }
+    .mountain.b {
+      width: 18px;
+      height: 18px;
+      left: 130px;
+      bottom: 45px;
+    }
+    .mountain.c {
+      width: 20px;
+      height: 20px;
+      left: 190px;
+      bottom: 60px;
+    }
+    .mountain.d {
+      width: 2px;
+      height: 2px;
+      left: 240px;
+      bottom: 62px;
+      border-bottom: none;
+    }
+    .mountain.e {
+      width: 14px;
+      height: 14px;
+      left: 285px;
+      bottom: 40px;
+    }
+
+    .mountain.a::after,
+    .mountain.b::after,
+    .mountain.c::after,
+    .mountain.d::after,
+    .mountain.e::after,
+    .mountain.a::before,
+    .mountain.b::before,
+    .mountain.c::before,
+    .mountain.d::before,
+    .mountain.e::before {
+      position: absolute;
+      content: '';
+      background-color: #333333;
+    }
+
+    .mountain.a::after,
+    .mountain.b::after,
+    .mountain.c::after,
+    .mountain.d::after,
+    .mountain.e::after {
+      left: -2px;
+      top: 100%;
+      width: 2px;
+    }
+
+    .mountain.a::after {
+      height: 70px;
+    }
+
+    .mountain.b::after {
+      height: 50px;
+    }
+
+    .mountain.c::after {
+      height: 70px;
+    }
+
+    .mountain.d::after {
+      height: 14px;
+    }
+
+    .mountain.e::after {
+      height: 18px;
+    }
+
+    .mountain.a::before,
+    .mountain.b::before,
+    .mountain.c::before,
+    .mountain.d::before,
+    .mountain.e::before {
+      top: -2px;
+      left: 100%;
+      height: 2px;
+    }
+    .mountain.a::before {
+      width: 14px;
+      box-shadow: -5px -5px 0 0 var(--color4);
+    }
+    .mountain.b::before {
+      width: 14px;
+      box-shadow: -5px -5px 0 0 var(--color4);
+    }
+    .mountain.c::before {
+      width: 36px;
+      box-shadow: -14px -5px 0 0 var(--color4);
+    }
+    .mountain.d::before {
+      width: 55px;
+      box-shadow: 5px 5px 0 0 var(--color4);
+    }
+    .mountain.e::before {
+      width: 70px;
+      box-shadow: 5px 5px 0 0 var(--color4);
+    }
+
+    /* 云和风 */
+
+    .cloud_wind_wrap_fast {
+      /* (画布大小减去两个边框) * 3 */
+      width: 1180px;
+      height: 100%;
+      animation: fly 3s linear infinite;
+      animation-play-state: running;
+    }
+
+    .slow .cloud_wind_wrap_fast {
+      animation-play-state: paused;
+    }
+
+    .cloud_wind_wrap_slow {
+      width: 1180px;
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      animation: fly 6s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .slow .cloud_wind_wrap_slow {
+      animation-play-state: running;
+    }
+
+    .cloud_wind_group {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* animation: fly 12s linear infinite;
+      animation-delay: calc(var(--i) * -6s); */
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-33.3333333333333333%);
+      }
+    }
+
+    /* 云 */
+    .cloud {
+      position: absolute;
+      width: 60px;
+      height: 45px;
+      /* background-color: #0984e3; */
+    }
+
+    .cloud.a {
+      left: 60px;
+      top: 20px;
+    }
+
+    .cloud.b {
+      left: 160px;
+      top: 80px;
+      transform: rotateY(180deg);
+    }
+
+    .cloud.c {
+      left: 280px;
+      top: 50px;
+    }
+
+    .cloud span {
+      position: absolute;
+      display: block;
+      background-color: #fff;
+      border: 2px solid #333333;
+      border-radius: 50%;
+    }
+
+    .cloud span:nth-child(1) {
+      width: 20px;
+      height: 20px;
+      left: 0;
+      bottom: 0;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(-45deg);
+    }
+
+    .cloud span:nth-child(2) {
+      width: 20px;
+      height: 20px;
+      left: 10px;
+      bottom: 10px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(45deg);
+    }
+
+    .cloud span:nth-child(3) {
+      width: 30px;
+      height: 30px;
+      left: 15px;
+      bottom: 12px;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(50deg);
+      box-shadow: 0 -3px 0 0 var(--color3);
+    }
+
+    .cloud span:nth-child(4) {
+      width: 27px;
+      height: 27px;
+      left: 31px;
+      bottom: 0px;
+      border-left-color: transparent;
+      transform: rotate(0deg);
+      box-shadow: 2px -1px 0 0 var(--color3);
+    }
+    .cloud span:nth-child(5) {
+      width: 35px;
+      height: 15px;
+      left: 10px;
+      bottom: 0px;
+      border-radius: 0;
+      border-width: 0 0 2px 0;
+    }
+
+    .cloud.b span:nth-child(1) {
+      box-shadow: 0 -3px 0 0 var(--color3);
+    }
+
+    .cloud.b span:nth-child(2) {
+      box-shadow: -2px -1px 0 0 var(--color3);
+    }
+
+    .cloud.b span:nth-child(3) {
+      box-shadow: -3px -1px 0 0 var(--color3);
+    }
+
+    .cloud.b span:nth-child(4) {
+      box-shadow: none;
+    }
+
+    /* 风 */
+    .wind {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      /* background-color: #Ec3E27; */
+    }
+
+    .wind.a {
+      top: 100px;
+      left: 40px;
+    }
+
+    .wind.b {
+      top: 140px;
+      left: 260px;
+    }
+
+    /* 大风纹理 */
+    .wind span,
+    .wind span::after,
+    .wind span::before {
+      position: absolute;
+      background-color: #555;
+      height: 3px;
+    }
+
+    .wind span::after,
+    .wind span::before {
+      content: '';
+    }
+
+    .wind span,
+    .wind span::after {
+      box-shadow: 4px 4px 0 -1px var(--color3);
+    }
+
+    /* 纹理1 */
+    .wind span:nth-child(1) {
+      top: 0;
+      left: 0;
+      width: 40px;
+    }
+
+    .wind span:nth-child(1)::before {
+      width: 10px;    
+      height: 10px;
+      left: -5px;
+      bottom: 0;
+      border: 3px solid #555;
+      border-radius: 50%;
+      background-color: transparent;
+      border-color: transparent transparent #555 #555;
+      transform: rotate(45deg);
+    }
+
+    .wind span:nth-child(1)::after {
+      width: 10px;
+      top: 0;
+      left: 110%;
+    }
+
+    /* 纹理2 */
+    .wind span:nth-child(2) {
+      top: 8px;
+      left: -20px;
+      width: 40px;
+    }
+
+    .wind span:nth-child(2)::before {
+      width: 10px;    
+      height: 10px;
+      left: -5px;
+      bottom: 0;
+      border: 3px solid #555;
+      border-radius: 50%;
+      background-color: transparent;
+      border-color: transparent transparent #555 #555;
+      transform: rotate(45deg);
+    }
+
+    .wind span:nth-child(2)::after {
+      width: 50px;
+      top: 0;
+      left: 110%;
+    }
+
+    /* 纹理3 */
+    .wind span:nth-child(3) {
+      top: 15px;
+      left: 50px;
+      width: 10px;
+    }
+
+    .wind span:nth-child(3)::before {
+      width: 40px;
+      top: 0;
+      right: 140%;
+    }
+
+    .wind span:nth-child(3)::after {
+      width: 40px;
+      top: 0;
+      left: 140%;
+    }
+
+    /* 纹理4 */
+    .wind span:nth-child(4) {
+      top: 20px;
+      left: 30px;
+      width: 40px;
+    }
+
+    .wind span:nth-child(4)::before {
+      width: 10px;
+      top: 0;
+      right: 120%;
+    }
+
+    .wind span:nth-child(4)::after {
+      width: 10px;
+      top: 0;
+      left: 120%;
+    }
+
+    /* 小风 */
+    .wind_small {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 小风纹理 */
+    .wind_small span,
+    .wind_small span::after {
+      position: absolute;
+      height: 3px;    
+      background-color: #555;
+      box-shadow: 4px 4px 0 -1px var(--color3);
+    }
+
+    .wind_small span::after {
+      content: '';
+      width: 50%;
+      height: 3px;
+      top: 0;
+      left: 120%;
+    }
+
+    .wind_small span:nth-child(1) {
+      top: 12px;
+      left: 5px;
+      width: 50px;
+    }
+
+    .wind_small span:nth-child(2) {
+      top: 32px;
+      left: 120px;
+      width: 20px;
+    }
+
+    .wind_small span:nth-child(3) {
+      top: 152px;
+      left: 120px;
+      width: 20px;
+    }
+
+    .wind_small span:nth-child(3)::after {
+      display: none;
+    }
+
+    .wind_small span:nth-child(4) {
+      top: 172px;
+      left: 60px;
+      width: 20px;
+    }
+
+    .wind_small span:nth-child(5) {
+      top: 60px;
+      left: 140px;
+      width: 10px;
+    }
+
+    .wind_small span:nth-child(5)::after {
+      display: none;
+    }
+
+    .wind_small span:nth-child(6) {
+      top: 20px;
+      left: 300px;
+      width: 30px;
+    }
+
+    .wind_small span:nth-child(7) {
+      top: 115px;
+      left: 330px;
+      width: 30px;
+    }
+    .wind_small span:nth-child(8) {
+      top: 170px;
+      left: 200px;
+      width: 10px;
+    }
+
+    .wind_small span:nth-child(8)::after {
+      display: none;
+    }
+
+    /* 树 */
+    .tree_warp,
+    .tree {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      animation: tree_move 1s linear infinite;
+      /* 该属性表示在对元素进行变换时 设置围绕那个点进行变换 */
+      transform-origin: bottom;
+      transition: all 0,2s linear;
+    }
+
+    .slow .tree_warp {
+      transform: skewX(-10deg);
+    }
+    @keyframes tree_move {
+      0%,
+      100% {
+        transform: skewX(16deg);
+      }
+      20% {
+        transform: skewX(18deg);
+      }
+      40% {
+        transform: skewX(20deg);
+      }
+      60% {
+        transform: skewX(17deg);
+      }
+      80% {
+        transform: skewX(18deg);
+      }
+    }
+
+    .tree span {
+      position: absolute;
+      bottom: 0;
+      display: block;
+      width: 2px;
+      height: 10px;
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tree span:nth-child(1) {
+      left: 70px;
+    }
+
+    .tree span:nth-child(2) {
+      left: 150px;
+    }
+
+    .tree span:nth-child(3) {
+      left: 180px;
+    }
+
+    .tree span:nth-child(4) {
+      left: 330px;
+    }
+
+    .tree span::after,
+    .tree span::before {
+      position: absolute;
+      content: '';
+      border: 2px solid #333;
+      width: 12px;
+      height: 26px;
+      bottom: 100%;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: inset -3px 4px 2px 0 var(--color4);
+    }
+
+    .tree span::after {
+      border-color: transparent var(--color4) transparent transparent;
+      background-color: transparent;
+      transform: rotate(-15deg) translate(5px, -4px);
+      box-shadow: none;
+    }
+
+    /* 三个风车 */
+    .windmill_wrap {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+    }
+
+    .windmill {
+      position: absolute;
+      left: 200px;
+      bottom: 0;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .windmill.left {
+      left: 100px;
+      transform: scale(0.75);
+      transform-origin: bottom;
+    }
+    .windmill.right{
+      left: 300px;
+      transform: scale(0.8);
+      transform-origin: bottom;
+    }
+
+    /* 风车柱子 */
+    .windmill .pole {
+      position: absolute;
+      bottom: 0;
+      width: 14px;
+      height: 120px;
+      /* 该属性指定了观察者与z=0平面的距离 */
+      perspective: 70px;
+    }
+
+    .windmill .pole::after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border: 3px solid #333;
+      border-width: 0 3px;
+      transform-origin: bottom;
+      transform: rotateX(15deg);
+    }
+
+    /* 风车头部 */
+    .windmill .head {
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fan_rotate 4s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .slow .windmill .head {
+      animation-play-state: running;
+    }
+
+    /* 扇叶组合 */
+    .windmill .head .fan {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fan_rotate 2s linear infinite;
+      animation-play-state: running;
+    }
+
+    .slow .windmill .head .fan {
+      animation-play-state: paused;
+    }
+
+    /* 扇叶组合中心圆 */
+    .windmill .head .fan::after {
+      position: absolute;
+      content: '';
+      width: 15px;
+      height: 15px;
+      background-color: #fff;
+      border: 3px solid #333;
+      border-radius: 50%;
+    }
+    /* 扇叶 */
+    .windmill .head .fan span {
+      position: absolute;
+      width: 70px;
+      height: 15px;
+      background-color: #fff;
+      border: 3px solid #333;
+      border-radius: 100%;
+      transform: rotate(calc(var(--i) * 120deg)) translateX(30px);
+    }
+
+    @keyframes fan_rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 速度切换开关 -->
+    <div id="switch">
+      <div class="circle"></div>
+    </div>
+    <!-- 主画布 -->
+    <div class="main">
+      <!-- 太阳 -->
+      <div class="sun">
+        <span style="--i:1"></span>
+        <span style="--i:2"></span>
+        <span style="--i:3"></span>
+        <span style="--i:4"></span>
+        <span style="--i:5"></span>
+        <span style="--i:6"></span>
+        <span style="--i:7"></span>
+        <span style="--i:8"></span>
+      </div>
+      <!-- 群山 让我们一起走过山川河流 -->
+      <div class="mountain a"></div>
+      <div class="mountain b"></div>
+      <div class="mountain c"></div>
+      <div class="mountain d"></div>
+      <div class="mountain e"></div>
+
+      <!-- 云和风 仰望天空，看见朵朵白云 -->
+      <div class="cloud_wind_wrap_fast">
+        <div class="cloud_wind_wrap_slow">
+          <div class="cloud_wind_group" style="--i:1">
+            <div class="cloud a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud c">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind_small">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="cloud_wind_group" style="--i:2">
+            <div class="cloud a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud c">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind_small">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="cloud_wind_group" style="--i:3">
+            <div class="cloud a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cloud c">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind a">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind b">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="wind_small">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 化作一棵树，长在你必经的路旁 -->
+      <div class="tree_wrap">
+        <div class="tree">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <!-- 风车 有风的日子里，你转落了谁的芳华 -->
+      <div class="windmill_wrap">
+        <!-- 风车 -->
+        <div class="windmill">
+          <!-- 风车支架 -->
+          <div class="pole"></div>
+          <!-- 风车头部 -->
+          <div class="head">
+            <!-- 风车扇叶 -->
+            <div class="fan">
+              <span style="--i:1"></span>
+              <span style="--i:2"></span>
+              <span style="--i:3"></span>
+            </div>
+          </div>
+        </div>
+        <div class="windmill left">
+          <!-- 风车支架 -->
+          <div class="pole"></div>
+          <!-- 风车头部 -->
+          <div class="head">
+            <!-- 风车扇叶 -->
+            <div class="fan">
+              <span style="--i:1"></span>
+              <span style="--i:2"></span>
+              <span style="--i:3"></span>
+            </div>
+          </div>
+        </div>
+        <div class="windmill right">
+          <!-- 风车支架 -->
+          <div class="pole"></div>
+          <!-- 风车头部 -->
+          <div class="head">
+            <!-- 风车扇叶 -->
+            <div class="fan">
+              <span style="--i:1"></span>
+              <span style="--i:2"></span>
+              <span style="--i:3"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let swch = document.getElementById('switch')
+    let container = document.querySelector('.container')
+    swch.addEventListener('click',(e) => {
+      // (h5新增classlist)操作类名
+      // .add() 添加新类名 如已经存在 则取消添加
+      // .contains() 确定元素中是否包含指定的类名 返回 布尔值
+      // .remove() 移除已经存在的类名
+      // .toggle() 如果classlist中存在给定的值 删除它 否则，添加它
+      // .replace() 类名替换
+
+      // swch.classList.toggle('switched')
+      if (swch.classList.contains('switched')) {
+        // 移除样式
+        swch.classList.remove('switched')
+        container.classList.remove('slow')
+      } else {
+        // 增加样式
+        swch.classList.add('switched')
+        container.classList.add('slow')
+      }
+    })
+  </script>
+</body>
+</html>
